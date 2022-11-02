@@ -1,5 +1,6 @@
 import requests
 from urllib.parse import quote_plus
+from bs4 import BeautifulSoup
 
 # outline main function
 def main():
@@ -14,17 +15,27 @@ def main():
     if resp.status_code != 200:
         print('Something went wrong with the API call')
         return
-    # parse the JSON the api returns
+    # parse the JSON the api returns and store urls
     data = resp.json()
     search_results = [x["link"] for x in data["items"]]
     print(search_results) 
-    # store the urls in dictionary
-    summary_data = dict()
     # use beautiful soup & requests to 
     # get website content and store in dictionary
+    summary_data = dict()
+    
+    for link in search_results:
+        print(f"Working on link: {link}")
+        page = requests.get(link)
+        soup = BeautifulSoup(page.content, "html.parser")
+        for data in soup(['style', 'script']):
+            # Remove tags
+            data.decompose()
+    
+        # return data by retrieving the tag content
+        summary_data[link] = ' '.join(soup.stripped_strings)
+    print(summary_data)
     # make scraping process concurrent
     # hand over to ayo
-    pass
 
 if __name__ == "__main__":
     main()
