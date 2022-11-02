@@ -1,6 +1,9 @@
 import requests
 from urllib.parse import quote_plus
 from bs4 import BeautifulSoup
+from concurrent.futures import ThreadPoolExecutor
+
+summary_data = dict()
 
 def scrape_link(link):
     print(f"Working on link: {link}")
@@ -11,7 +14,7 @@ def scrape_link(link):
         data.decompose()
 
     # return data by retrieving the tag content
-    return ' '.join(soup.stripped_strings)
+    summary_data[link] = ' '.join(soup.stripped_strings)
 
 # outline main function
 def main():
@@ -28,16 +31,23 @@ def main():
         return
     # parse the JSON the api returns and store urls
     data = resp.json()
+    print(f'Google searched for {data["queries"]["request"][0]["title"]}')
     search_results = [x["link"] for x in data["items"]]
-    print(search_results) 
+    print("Google returned, ", search_results) 
     # use beautiful soup & requests to 
     # get website content and store in dictionary
-    summary_data = dict()
     
-    for link in search_results:
-        summary_data[link] = scrape_link(link)
-    print(summary_data)
+    # for link in search_results:
+    #     summary_data[link] = scrape_link(link)
+ 
     # make scraping process concurrent
+    with ThreadPoolExecutor() as executor:
+        executor.map(scrape_link, search_results)
+    
+    # print(summary_data)
+    print("The page data is: ")
+    for k,v in summary_data.items():
+        print(k, v[0:200])
     # hand over to ayo
 
 if __name__ == "__main__":
