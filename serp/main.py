@@ -2,6 +2,17 @@ import requests
 from urllib.parse import quote_plus
 from bs4 import BeautifulSoup
 
+def scrape_link(link):
+    print(f"Working on link: {link}")
+    page = requests.get(link)
+    soup = BeautifulSoup(page.content, "html.parser")
+    for data in soup(['style', 'script']):
+        # Remove tags
+        data.decompose()
+
+    # return data by retrieving the tag content
+    return ' '.join(soup.stripped_strings)
+
 # outline main function
 def main():
     # accept keyword from the user
@@ -24,15 +35,7 @@ def main():
     summary_data = dict()
     
     for link in search_results:
-        print(f"Working on link: {link}")
-        page = requests.get(link)
-        soup = BeautifulSoup(page.content, "html.parser")
-        for data in soup(['style', 'script']):
-            # Remove tags
-            data.decompose()
-    
-        # return data by retrieving the tag content
-        summary_data[link] = ' '.join(soup.stripped_strings)
+        summary_data[link] = scrape_link(link)
     print(summary_data)
     # make scraping process concurrent
     # hand over to ayo
