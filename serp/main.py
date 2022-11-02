@@ -34,12 +34,9 @@ def main():
     print(f'Google searched for {data["queries"]["request"][0]["title"]}')
     search_results = [x["link"] for x in data["items"]]
     print("Google returned, ", search_results) 
+    
     # use beautiful soup & requests to 
     # get website content and store in dictionary
-    
-    # for link in search_results:
-    #     summary_data[link] = scrape_link(link)
- 
     # make scraping process concurrent
     with ThreadPoolExecutor() as executor:
         executor.map(scrape_link, search_results)
@@ -48,7 +45,9 @@ def main():
     print("The page data is: ")
     for k,v in summary_data.items():
         print(k, v[0:200])
+    
     # hand over to ayo
+    # ayo uses text in page to generate summary based on keyword for each dictionary entry
 
 if __name__ == "__main__":
     main()
