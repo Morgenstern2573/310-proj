@@ -8,9 +8,17 @@ def main():
     # use keyword to make API call with requests
     path = f"https://www.googleapis.com/customsearch/v1?key=AIzaSyC9-yThffMzzsDYcQN7aZZUyVtre8bySsU&cx=93b7cb032f56c40e2&q={query}"
     resp = requests.get(path)
+
+    resp.raise_for_status()
+
+    if resp.status_code == 200:
+        print('Success!')
+    else:
+        print('Something went wrong with the API call')
+        return
+    # parse the JSON the api returns
     data = resp.json()
     print(data) 
-    # parse the JSON api returns
     # store the urls in dictionary
     # use beautiful soup & requests to 
     # get website content and store in dictionary
