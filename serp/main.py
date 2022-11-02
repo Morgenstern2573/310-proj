@@ -44,7 +44,7 @@ def main():
     # print(summary_data)
     print("The page data is: ")
     for k,v in summary_data.items():
-        print(k, v[0:200])
+        print(f"Link: {k}, text: {v[0:200]}")
     
     # hand over to ayo
     # ayo uses text in page to generate summary based on keyword for each dictionary entry
