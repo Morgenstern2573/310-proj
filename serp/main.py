@@ -11,9 +11,7 @@ def main():
 
     resp.raise_for_status()
 
-    if resp.status_code == 200:
-        print('Success!')
-    else:
+    if resp.status_code != 200:
         print('Something went wrong with the API call')
         return
     # parse the JSON the api returns
