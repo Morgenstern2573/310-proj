@@ -2,6 +2,7 @@ import requests
 from urllib.parse import quote_plus
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
+from summarizer import summarize_text
 
 summary_data = dict()
 
@@ -48,6 +49,13 @@ def main():
     
     # hand over to ayo
     # ayo uses text in page to generate summary based on keyword for each dictionary entry
+
+    with ThreadPoolExecutor() as executor:
+        results = executor.map(summarize_text, summary_data.values())
+
+    for r in results:
+        print(r)   
+
 
 if __name__ == "__main__":
     main()
