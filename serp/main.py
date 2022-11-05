@@ -51,11 +51,15 @@ def main():
     # ayo uses text in page to generate summary based on keyword for each dictionary entry
 
     with ThreadPoolExecutor() as executor:
-        results = executor.map(summarize_text, summary_data.values())
+        for k,v in summary_data.items():
+            future = executor.submit(summarize_text, v)
+            summary_data[k] = future.result()
+    
+    print("The summarized page data is: ")
+    for k,v in summary_data.items():
+        print(f"Link: {k}, text: {v[0:200]}")
 
-    for r in results:
-        print(r)   
-
+    
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,10 @@
 def summarize_text(text):
     import nltk
+    # nltk.download('punkt')
+    # nltk.download('stopwords')
     import re
     import heapq
-
+    
     article_text = text
     article_text = re.sub(r'[[0-9]*]', ' ', article_text)
     article_text = re.sub(r's+', ' ', article_text)
@@ -42,3 +44,5 @@ def summarize_text(text):
     summary = ' '.join(summary_sentences)
     return summary
 
+
+summarize_text("fffffffffffffffffffffffffffff")
