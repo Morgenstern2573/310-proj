@@ -7,7 +7,6 @@ def summarize_text(text):
     
     article_text = text
     article_text = re.sub(r'[[0-9]*]', ' ', article_text)
-    article_text = re.sub(r's+', ' ', article_text)
 
     # Removing special characters and digits
     formatted_article_text = re.sub('[^a-zA-Z]', ' ', article_text )
