@@ -10,8 +10,7 @@ def summarize_text(text):
 
     # Removing special characters and digits
     formatted_article_text = re.sub('[^a-zA-Z]', ' ', article_text )
-    formatted_article_text = re.sub(r's+', ' ', formatted_article_text)
-
+    
     sentence_list = nltk.sent_tokenize(article_text)
 
     stopwords = nltk.corpus.stopwords.words('english')

@@ -18,7 +18,7 @@ def scrape_link(link):
     summary_data[link] = ' '.join(soup.stripped_strings)
 
 # outline main function
-def main(query=None):
+def serp(query=None):
     if query is None:
     # accept keyword from the user
         query = quote_plus(input("Enter space-separated keywords: ").strip())
@@ -61,8 +61,10 @@ def main(query=None):
     print("The summarized page data is: ")
     for k,v in summary_data.items():
         print(f"Link: {k}, text: {v[0:200]}")
+    
+    return summary_data
 
     
 
 if __name__ == "__main__":
-    main()
+    serp()
