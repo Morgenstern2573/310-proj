@@ -18,9 +18,12 @@ def scrape_link(link):
     summary_data[link] = ' '.join(soup.stripped_strings)
 
 # outline main function
-def main():
+def main(query=None):
+    if query is None:
     # accept keyword from the user
-    query = quote_plus(input("Enter space-separated keywords: ").strip())
+        query = quote_plus(input("Enter space-separated keywords: ").strip())
+    else:
+        query = quote_plus(query.strip())
     # use keyword to make API call with requests
     path = f"https://www.googleapis.com/customsearch/v1?key=AIzaSyC9-yThffMzzsDYcQN7aZZUyVtre8bySsU&cx=93b7cb032f56c40e2&q={query}"
     resp = requests.get(path)
