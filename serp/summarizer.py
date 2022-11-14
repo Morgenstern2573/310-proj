@@ -42,5 +42,3 @@ def summarize_text(text):
     summary = ' '.join(summary_sentences)
     return summary
 
-
-summarize_text("fffffffffffffffffffffffffffff")
